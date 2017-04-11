@@ -1,217 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>用RxJava实现一个ImageLoader | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
-<meta name="keywords">
-<meta property="og:type" content="article">
-<meta property="og:title" content="用RxJava实现一个ImageLoader">
-<meta property="og:url" content="http://yoursite.com/2017/04/11/用RxJava实现一个ImageLoader/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
-<meta property="og:updated_time" content="2017-04-11T06:47:34.505Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用RxJava实现一个ImageLoader">
-<meta name="twitter:description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+extends base
 
-</head>
+block title
+  title= page.title + ' | ' + config.title
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-用RxJava实现一个ImageLoader" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/11/用RxJava实现一个ImageLoader/" class="article-date">
-  <time datetime="2017-04-11T06:37:39.273Z" itemprop="datePublished">2017-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      用RxJava实现一个ImageLoader
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_15%20%E6%88%B3%E6%88%91" target="_blank" rel="external">戳我</a>，这篇文章是RxJava入门很好的资料。</p>
-<p>RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较高效的学习方式。</p>
-<p>在这个前提下，我就开始着手写了一个ImageLoader。之所以是做ImageLoader，是因为最近也正好在看主席的《Android开发艺术探索》，其中一章正好是实现了一个ImageLoader，书里的实现方式是线程池和Handler，耗时的加载图片任务在线程池中执行，执行完成后发送消息到Handler，给ImageView设置图片在主线程中完成。基本设计思路和AsyncTask一致，对这块不懂的可以去看下AsyncTask的源码，在此就不展开分析了，善用搜索。</p>
-<p>这种类似AsyncTask的实现看着代码很繁琐，用RxJava来代替Handler和线程池实现线程切换和异步加载便捷很多，代码的逻辑看起来也舒服多了。</p>
-<p>在贴上代码之前还是先讲下ImageLoader实现的大体思路吧，首先加载图片需要内存缓存和磁盘缓存功能，分别使用了LruCache和DiskLruCache，并且需要图片压缩的功能，压缩功能是BitmapFactory解析bitmap时通过更改Options中的inSampleSize(采样率)实现的。加载图片入口方法如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void bindImage(ImageView imageView, String url, int reqWidth, int reqHeight) &#123;</div><div class="line">     String key = hashKeyFormUrl(url);</div><div class="line">     try &#123;</div><div class="line">         if (mLruCache.get(key) != null) &#123;</div><div class="line">             bindImageFromMemo(imageView, key); //从内存缓存中加载</div><div class="line">         &#125;</div><div class="line">         if (mDiskLruCache.get(key) != null) &#123;</div><div class="line">             bindImageFromDisk(imageView, key, reqWidth, reqHeight); //从磁盘缓存中加载</div><div class="line">         &#125; else &#123;</div><div class="line">             downloadImageFromHttp(imageView, url, reqWidth, reqHeight);  //从网络下载图片</div><div class="line">         &#125;</div><div class="line">     &#125; catch (IOException e) &#123;</div><div class="line">         e.printStackTrace();</div><div class="line">     &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<p>想必不用过多解释这个加载流程了吧，依次从内存缓存，磁盘缓存，网络加载图片。这里以从网络加载图片代码逻辑为例，对比使用RxJava和不使用的区别，大家自行感受区别。代码具体逻辑是从网络加载图片，并将下载好的图片存储到磁盘缓存中，并且将压缩过的bitmap设置给imageview。。首先演示使用线程池加Handler的实现方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">    private Handler mHandler = new Handler(getMainLooper())&#123;//主线程中的Handler，作用是切换线程，在这里是将线程池中执行完毕返回的bitmap等封装好的对象发送到主线程中处理</div><div class="line">        @Override</div><div class="line">        public void handleMessage(Message msg) &#123;</div><div class="line">            if(msg.what == MESSAGE_POST_RESULT)&#123;</div><div class="line">	            Result result = (Result)msg.obj;</div><div class="line">		        ImageView imageview = result.imageview;</div><div class="line">		        String url = result.url;</div><div class="line">		        Bitmap bitmap = result.bitmap;</div><div class="line">		        if(url.equals((String)imageview.getTag(R.id.imageloader_id)))&#123;//防止图片错位</div><div class="line">				       imageview.setImageBitmap(bitmap);</div><div class="line">		        &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">private void downloadImageFromHttp(final ImageView imageView, final String url, final int reqWidth, final int reqHeight) &#123;</div><div class="line">        imageView.setTag(R.id.imageloader_id, url);</div><div class="line">        THREAD_POOL_EXECUTOR.execute(//在线程池中执行下载任务，执行完成后发送消息</div><div class="line">                new Runnable() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void run() &#123;</div><div class="line">		               InputStream inputStream = new URL(s).openStream();</div><div class="line">                       saveBitmapToDisk(inputStream, hashKeyFormUrl(url));  </div><div class="line">                       Bitmap bitmap = getBitmapFromDisk(hashKeyFormUrl(url),reqWidth,reqHeight);</div><div class="line">                       mHandler.obtainMessage(MESSAGE_POST_RESULT,new Result(imageView,url,bitmap)).setToTarget();</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>以上省去了线程池配置代码，代码逻辑还是有点绕的，而且代码量也不少，对于不是很熟悉Handler和线程池的盆友可能写着写着就绕晕了，所以这里强烈推荐使用RxJava来实现以上功能，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">private void downloadImageFromHttp(final ImageView imageView, final String url, final int reqWidth, final int reqHeight) &#123;</div><div class="line">       imageView.setTag(R.id.imageloader_id, url);</div><div class="line">       Observable.just(url)</div><div class="line">               .flatMap(new Func1&lt;String, Observable&lt;Bitmap&gt;&gt;() &#123;</div><div class="line">                   @Override</div><div class="line">                   public Observable&lt;Bitmap&gt; call(String s) &#123;</div><div class="line">                       InputStream inputStream = null;</div><div class="line">                       try &#123;</div><div class="line">                           inputStream = new URL(s).openStream();</div><div class="line">                           saveBitmapToDisk(inputStream, hashKeyFormUrl(url));</div><div class="line">                       &#125; catch (IOException e) &#123;</div><div class="line">                           e.printStackTrace();</div><div class="line">                       &#125; finally &#123;</div><div class="line">                           return Observable.just(getBitmapFromDisk(hashKeyFormUrl(url), reqWidth, reqHeight));</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">               &#125;)</div><div class="line">               .subscribeOn(Schedulers.io())</div><div class="line">               .observeOn(AndroidSchedulers.mainThread())</div><div class="line">               .subscribe(new Action1&lt;Bitmap&gt;() &#123;</div><div class="line">                   @Override</div><div class="line">                   public void call(Bitmap bitmap) &#123;</div><div class="line">                       if (imageView.getTag(R.id.imageloader_id) == url) &#123;</div><div class="line">                           imageView.setImageBitmap(bitmap);</div><div class="line">                       &#125;</div><div class="line">                   &#125;</div><div class="line">               &#125;);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p>直观来看，代码从上到下，一气呵成，不用线程池繁琐的配置，没有handler线程切换等操作，像穿珠子一样，逻辑从头到尾都是一条线。</p>
-<p>首先just操作符接收了传入的url，接下来flatmap进行数据的变换操作，通过url获取输入流，并且将其解析成bitmap存储到磁盘缓存中，然后再从磁盘缓存中读取刚写入的bitmap，并且最终将读取的bitmap传入subscriber的回调方法中设置bitmap。看到这里，你可能会疑问了，这么一串操作都是在主线程中完成的吗？这还能不ANR?？？其实并不是··关键在于以下两行代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">subscribeOn(Schedulers.io())</div><div class="line">observeOn(AndroidSchedulers.mainThread())</div></pre></td></tr></table></figure>
-<p>这两行代码的作用是切换线程，前者让subscribe过程中发生在子线程中，这里的Schedulers.io()表示的进行io操作的线程调度器，内部实质是线程池。后者是让subscriber的回调过程发生在UI线程中。轻松两行代码就实现了线程间的切换，比起handler来切换线程这样简直不能太方便。</p>
-<p>其他使用到RxJava的地方和以上大同小异，无非是从磁盘缓存加载和从内存缓存加载过程的不同，具体的代码逻辑可以参照源码，使用到比较频繁的操作符有：just,from,map,flatmap等，大家可以着重去了解这几个操作符的使用。个人觉得使用RxJava主要还是一个编程思维的转变，概括来说就是“流”，忘记回调，忘记线程，忘记。。。</p>
-<p>写完了，请大家批评指正。。</p>
-<p>最后贴上源码地址：</p>
-<p><a href="https://github.com/geekinpink/ImageLoaderBasedRxjava%20%E6%BA%90%E7%A0%81" target="_blank" rel="external">源码</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/用RxJava实现一个ImageLoader/" data-id="cj1d6v45p0003goqwuozai8qz" class="article-share-link">Delen</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
-      <div class="article-nav-title">
-        
-          仿网易新闻评论“盖楼”效果实现
-        
-      </div>
-    </a>
-  
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">用RxJava实现一个ImageLoader</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">仿网易新闻评论“盖楼”效果实现</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/Recyclerview加载更多功能实现/">RecyclerView加载更多功能实现</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/Android消息机制浅析/">Android消息机制浅析</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-  </div>
-</body>
-</html>
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.duoshuo
+      a.ds-thread-count(data-thread-key=page.path, href=url_for(page.path) + '#comments')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
+    include _partial/tag
+    include _partial/post_nav
+    if theme.duoshuo
+      div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
+         .ds-share-inline
+            ul.ds-share-icons-16
+              li(data-toggle='ds-share-icons-more')
+                a(class='ds-more' href='javascript:void(0);') 分享到：
+              li
+                a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
+              li
+                a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
+              li
+                a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
+              li
+                a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
+            .ds-share-icons-more
+    include _partial/comments

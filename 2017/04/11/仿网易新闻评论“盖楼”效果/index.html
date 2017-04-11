@@ -1,250 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>仿网易新闻评论“盖楼”效果实现 | Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
-<meta name="keywords">
-<meta property="og:type" content="article">
-<meta property="og:title" content="仿网易新闻评论“盖楼”效果实现">
-<meta property="og:url" content="http://yoursite.com/2017/04/11/仿网易新闻评论“盖楼”效果/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
-<meta property="og:updated_time" content="2017-04-11T06:47:35.694Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="仿网易新闻评论“盖楼”效果实现">
-<meta name="twitter:description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-  
+extends base
 
-</head>
+block title
+  title= page.title + ' | ' + config.title
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main"><article id="post-仿网易新闻评论“盖楼”效果" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/" class="article-date">
-  <time datetime="2017-04-11T06:35:27.731Z" itemprop="datePublished">2017-04-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      仿网易新闻评论“盖楼”效果实现
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。</p>
-<p>首先上图给大家看下效果：</p>
-<p>###</p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h5 id="数据结构设计"><a href="#数据结构设计" class="headerlink" title="数据结构设计"></a>数据结构设计</h5><p>首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的model可以包含评论的所有数据呢？</p>
-<p>首先满足简单评论的model很容易，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class Comment &#123;</div><div class="line">    private int id;</div><div class="line">    private String mReplyTime;</div><div class="line">    private String mAvaterUrl;</div><div class="line">    private String mUsername;</div><div class="line">    private String mUserArea;</div><div class="line">    private String mCommentContent;</div><div class="line">    private int mFavorCount;</div><div class="line">    </div><div class="line">    //getter setter</div><div class="line">    ...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>以上包括了一条简单评论需要展示项的信息,可视如果是回复其他评论的评论，这种存在“盖楼”的评论项，这种结构就无法满足了。吃根辣条冷静一下，再分析盖楼中的内容，发现盖楼中的一项内容其实是被回复的评论，其中包括了用户昵称，评论内容。<br>总结来说，一条评论中可能包括了另一条评论，那么在Comment中添加一个字段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private Comment replyTo;</div></pre></td></tr></table></figure>
-<p>这个字段保存了其回复的评论，这样就能形成一个类似单向链表的结构了，一条评论项中能够与它回复的评论关联起来，并且能够依次链接，那么所有回复的评论内容都能在链表中找到，结构清晰明了，那么model就已经设计好了。</p>
-<h5 id="界面设计"><a href="#界面设计" class="headerlink" title="界面设计"></a>界面设计</h5><p>很明显这是一个列表结构，最外层咱们可以使用Recyclerview来实现，每个评论项可以使用一个自定义View封装起来，这个自定义View来处理数据和UI的适配。我们来分析下这个View的构成：</p>
-<ol>
-<li>用户头像，昵称，回复内容等都是基础内容，每个评论项都会展示出这些信息。</li>
-<li>有的回复其他评论的评论项中间会多出一个评论“楼层”。</li>
-</ol>
-<p>这样简单一分析，我们就有了思路了，这个自定义的View可以分解成两个部分，一个部分就是基础信息展示，另个就是评论“楼层”展示。布局文件如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;merge xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line"></div><div class="line">    &lt;RelativeLayout</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;&gt;</div><div class="line"></div><div class="line">        &lt;io.geek.myapplication.view.CircleView2</div><div class="line">            android:id=&quot;@+id/iv_avater&quot;</div><div class="line">            android:layout_width=&quot;50dp&quot;</div><div class="line">            android:layout_height=&quot;50dp&quot;</div><div class="line">            android:layout_alignParentLeft=&quot;true&quot;</div><div class="line">            android:layout_alignParentStart=&quot;true&quot;</div><div class="line">            android:layout_alignParentTop=&quot;true&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/tv_username&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_marginTop=&quot;5dp&quot;</div><div class="line">            android:layout_toRightOf=&quot;@+id/iv_avater&quot;</div><div class="line">            android:text=&quot;Geek&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/tv_user_area&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_below=&quot;@+id/tv_username&quot;</div><div class="line">            android:layout_toEndOf=&quot;@+id/iv_avater&quot;</div><div class="line">            android:layout_toRightOf=&quot;@+id/iv_avater&quot;</div><div class="line">            android:text=&quot;来自火星的网友&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/tv_reply_time&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_alignBottom=&quot;@+id/tv_user_area&quot;</div><div class="line">            android:layout_marginLeft=&quot;5dp&quot;</div><div class="line">            android:layout_marginRight=&quot;5dp&quot;</div><div class="line">            android:layout_marginTop=&quot;5dp&quot;</div><div class="line">            android:layout_toRightOf=&quot;@+id/tv_user_area&quot;</div><div class="line">            android:text=&quot;33分钟前&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;TextView</div><div class="line">            android:id=&quot;@+id/favor_count&quot;</div><div class="line">            android:layout_width=&quot;wrap_content&quot;</div><div class="line">            android:layout_height=&quot;wrap_content&quot;</div><div class="line">            android:layout_alignParentRight=&quot;true&quot;</div><div class="line">            android:text=&quot;2896&quot;</div><div class="line">            android:textSize=&quot;8dp&quot;/&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">    &lt;io.geek.myapplication.comment.CommentFloorView</div><div class="line">        android:id=&quot;@+id/comment_floor&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:visibility=&quot;gone&quot;/&gt;</div><div class="line"></div><div class="line">    &lt;TextView</div><div class="line">        android:id=&quot;@+id/tv_comment_content&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;wrap_content&quot;</div><div class="line">        android:text=&quot;我只是一个普通的评论。&quot;/&gt;</div><div class="line">&lt;/merge&gt;</div></pre></td></tr></table></figure>
-<p><strong>tips：</strong> 使用merge标签能够减少布局层级，减少界面渲染次数，优化性能。</p>
-<p>以上是我们自定义CommentItemView的布局文件，现在我们来编写CommentItemView，这个自定义View继承LinearLayout，然后构造方法中初始化各个需要绑定数据的view，暴露一个绑定数据的bind方法，这样就能把数据展示在对应的view上了。代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div></pre></td><td class="code"><pre><div class="line">public class CommentItemView extends LinearLayout &#123;</div><div class="line">    CircleImageView avater;</div><div class="line">    TextView tvUsername;</div><div class="line">    TextView tvUserArea;</div><div class="line">    TextView tvReplyTime;</div><div class="line">    TextView tvFavorCount;</div><div class="line">    CommentFloorView commentFloorView;</div><div class="line">    TextView tvCommentContent;</div><div class="line">    Comment mComment;</div><div class="line"></div><div class="line">    public CommentItemView(Context context) &#123;</div><div class="line">        this(context, null);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public CommentItemView(Context context, @Nullable AttributeSet attrs) &#123;</div><div class="line">        this(context, attrs, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public CommentItemView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">        this(context, attrs, defStyleAttr, 0);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public CommentItemView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) &#123;</div><div class="line">        super(context, attrs, defStyleAttr);</div><div class="line"></div><div class="line">        initView(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void initView(Context context) &#123;</div><div class="line">        LayoutInflater.from(context).inflate(R.layout.list_item_view_comment, this,true);</div><div class="line">        int padding = getResources().getDimensionPixelOffset(R.dimen.activity_horizontal_margin);</div><div class="line">        setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));</div><div class="line">        setOrientation(VERTICAL);</div><div class="line">        setPadding(padding, padding, padding, padding);</div><div class="line"></div><div class="line">        avater = (CircleImageView) findViewById(R.id.iv_avater);</div><div class="line">        tvUsername = (TextView) findViewById(R.id.tv_username);</div><div class="line">        tvUserArea = (TextView) findViewById(R.id.tv_user_area);</div><div class="line">        tvReplyTime = (TextView) findViewById(R.id.tv_reply_time);</div><div class="line">        commentFloorView = (CommentFloorView) findViewById(R.id.comment_floor);</div><div class="line">        tvCommentContent = (TextView) findViewById(R.id.tv_comment_content);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void bind(Comment comment) &#123;</div><div class="line">        mComment = comment;</div><div class="line">        tvUsername.setText(comment.getUsername());</div><div class="line">        tvUserArea.setText(comment.getUserArea());</div><div class="line">        tvReplyTime.setText(comment.getReplyTime());</div><div class="line">        tvCommentContent.setText(comment.getCommentContent());</div><div class="line">        commentFloorView = (CommentFloorView) findViewById(R.id.comment_floor);</div><div class="line"></div><div class="line">        setupCommentFloorView();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void setupCommentFloorView() &#123;</div><div class="line">        List&lt;Comment&gt; replyFloor = getReplyFloor();</div><div class="line">        if (replyFloor != null) &#123;</div><div class="line">            commentFloorView.setVisibility(VISIBLE);</div><div class="line">            commentFloorView.updateData(replyFloor);</div><div class="line">        &#125; else &#123;</div><div class="line">            commentFloorView.setVisibility(GONE);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    //通过comment中的replyTo字段找到其回复的评论链，按照回复的顺序排列放入list中</div><div class="line">    private List&lt;Comment&gt; getReplyFloor( ) &#123;</div><div class="line">        List&lt;Comment&gt; floorData = new ArrayList&lt;&gt;();</div><div class="line">        if (mComment == null || mComment.getReplyTo() == null) &#123;</div><div class="line">            return null;</div><div class="line">        &#125;</div><div class="line">        Comment reply = mComment.getReplyTo();</div><div class="line">        while (reply != null) &#123;</div><div class="line">            floorData.add(reply);</div><div class="line">            reply = reply.getReplyTo();</div><div class="line">        &#125;</div><div class="line">        //按照回复的顺序来排列</div><div class="line">        Collections.reverse(floorData);</div><div class="line">        return floorData;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的代码结构很简单，没有啥复杂的逻辑，就是一个简单点的封装了各个控件的容器，然后有一个绑定数据的方法。可能你看到一个陌生的view：CommentFloorView，<strong>以下</strong>就是本文需要讲的<strong>重点</strong>！！和唯一的<strong>难点</strong>！！</p>
-<p>CommentFloorView也是我们一个自定义view，这个view负责的是评论“楼层”展示的，主体构成是Recylerview，我们来仔细分析下这个评论“楼层”，本质就是一个列表，列表中展示的是评论用户名和评论的内容，如果这个列表超过了一定的数量就会折叠展示，点击展开楼层会全部展示，并且每个项会有边框，并不是简单的每个列表项套一个边框，而是看起来会有层叠效果的边框。通过这样一分析，总结出实现这个view的两个难点：</p>
-<ol>
-<li>展开和隐藏楼层。</li>
-<li>边框的绘制。</li>
-</ol>
-<ul>
-<li><strong>难点一</strong></li>
-</ul>
-<p>这个recylerview中展示的有两种view，其一就是评论项，其二就是展开/隐藏楼层的按钮。熟悉recylerview功能应该会知道重写adapter中的getItemType方法可以实现这种一个recylerview展示不同的类型item。</p>
-<p>首先解析展开和隐藏楼层功能，重写getItemCount方法,代码如下，解析在注释：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public int getItemCount() &#123;</div><div class="line">    if (hasHideFloor()) &#123;</div><div class="line">        if (isFloorExpanded) &#123;</div><div class="line">            //如果有有隐藏楼层，并且楼层是展开的状态</div><div class="line">            //加的1是因为最后还有一个隐藏楼层的项</div><div class="line">            return mComments.size() + 1;</div><div class="line">        &#125; else &#123;</div><div class="line">            //如果有隐藏楼层，并且没有展开，那么只有4项，分别是第一二项数据，展开楼层按钮和最后一项数据</div><div class="line">            return 4;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        //如果没有隐藏楼层，则返回数据的数量</div><div class="line">        return mComments.size();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//如果数据量大于一个默认值（这里设定的是5个），那么默认会有隐藏楼层，小于的话就无需隐藏</div><div class="line">private boolean hasHideFloor() &#123;</div><div class="line">    return mComments.size() &gt; EXPAND_LIMIT_COMMENT_COUNT;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>然后重现getItemType方法，只要把逻辑理清楚了其实也很简单，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public int getItemViewType(int position) &#123;</div><div class="line">    if (hasHideFloor()) &#123;</div><div class="line">        if (isFloorExpanded) &#123;</div><div class="line">            if (position == mComments.size()) &#123;</div><div class="line">                //如果有隐藏楼层，并且楼层是展开状态，并且是最后一项，那么返回展开/收起按钮布局ID</div><div class="line">                return R.layout.list_item_hide_expand_floor;</div><div class="line">            &#125; else &#123;</div><div class="line">                //如果有隐藏楼层，并且楼层是展开状态，不是最后一项，返回评论项布局ID</div><div class="line">                return R.layout.list_item_simple_reply_comment;</div><div class="line">            &#125;</div><div class="line">        &#125; else &#123;</div><div class="line">            if (position == EXPAND_FLOOR_ITEM_POSITION) &#123;</div><div class="line">                //如果有隐藏楼层，并且楼层是隐藏状态，并且是指定的展开楼层按钮位置，那么返回展开/收起按钮布局ID</div><div class="line">                return R.layout.list_item_hide_expand_floor;</div><div class="line">            &#125; else &#123;</div><div class="line">                //如果有隐藏楼层，并且楼层是隐藏状态，不是展开楼层按钮位置，那么评论项布局ID</div><div class="line">                return R.layout.list_item_simple_reply_comment;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        //如果没有隐藏楼层，那么都是返回评论布局ID</div><div class="line">        return R.layout.list_item_simple_reply_comment;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>重写好了以上两个方法，就能配合onCreateViewHolder和onBindViewHolder方法来实现列表中不同位置生成不同的View，并且绑定响应的数据项。</p>
-<p>这样就能实现UI效果了，但是有个棘手的问题来了，怎么做到点击展开/隐藏楼层后真的能展开和隐藏部分item呢？不要慌，吃根辣条冷静分析下，我们已经重写了getItemCount和getItemType方法，判断逻辑中有利用判定楼层展开和隐藏的字段isFloorExpaned来返回不同的item个数和控制在不同位置返回不同的view，其实实现展开和隐藏楼层的核心部分就写完了，现在我们只需要控制这个isFloorExpanded字段的值就行了，具体实现就是编写一个监听点击展开/隐藏楼层按钮的接口，然后在adapter构造方法中创建一个监听器，传入到展开/隐藏楼层按钮的ViewHolder中，在点击这个view的时候触发监听器，修改isFloorExpanded方法，并且notifyDataSetChanged()方法，重新刷新recylerview。核心代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">//这个adapter是编写在CommentFloorView中的，所以使用了static来修饰</div><div class="line">public static class CommentFloorAdapter extends RecyclerView.Adapter &#123;</div><div class="line">       private List&lt;Comment&gt; mComments = new ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">       private OnFloorExpandListener mOnFloorExpandListener;</div><div class="line">       private boolean isFloorExpanded;</div><div class="line"></div><div class="line">       public CommentFloorAdapter() &#123;</div><div class="line">           mOnFloorExpandListener = new OnFloorExpandListener() &#123;</div><div class="line">               @Override</div><div class="line">               public void onFloorExpand(boolean isExpand) &#123;</div><div class="line">                   isFloorExpanded = isExpand;</div><div class="line">                   notifyDataSetChanged();</div><div class="line">               &#125;</div><div class="line">           &#125;;</div><div class="line"></div><div class="line">       &#125;</div><div class="line"></div><div class="line">     </div><div class="line"></div><div class="line">      //.....</div><div class="line"></div><div class="line">       public interface OnFloorExpandListener &#123;</div><div class="line">           void onFloorExpand(boolean isExpand);</div><div class="line">       &#125;</div><div class="line"></div><div class="line"></div><div class="line">       static class HideExpandFloorVH extends RecyclerView.ViewHolder &#123;</div><div class="line">           FrameLayout mContentView;</div><div class="line">           TextView tips;</div><div class="line">           OnFloorExpandListener mOnFloorExpandListener;</div><div class="line"></div><div class="line">           public HideExpandFloorVH(View itemView, OnFloorExpandListener onFloorExpandListener, final boolean isFloorExpanded) &#123;</div><div class="line">               super(itemView);</div><div class="line">               mOnFloorExpandListener = onFloorExpandListener;</div><div class="line">               mContentView = (FrameLayout) itemView;</div><div class="line">               tips = (TextView) mContentView.findViewById(R.id.tv_is_show_all);</div><div class="line"></div><div class="line">               mContentView.setOnClickListener(new OnClickListener() &#123;</div><div class="line">                   @Override</div><div class="line">                   public void onClick(View v) &#123;</div><div class="line">                       mOnFloorExpandListener.onFloorExpand(!isFloorExpanded);</div><div class="line">                   &#125;</div><div class="line">               &#125;);</div><div class="line">           &#125;</div><div class="line"></div><div class="line">           public void changeTips(boolean isFloorExpanded) &#123;</div><div class="line">               tips.setText(isFloorExpanded ? &quot;收起展开楼层&quot; : &quot;展开隐藏楼层&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
-<p><strong>tips:</strong>内部类最好使用static修饰，这样内部类不会持有外部类的强应用，防止内存泄露，优化性能。</p>
-<p>这样核心的功能就已经实现啦~此时的实现效果如下图：</p>
-<p>这样看着和原版的还是有点差距的，这是没有绘制边框的原因，吃根辣条休息下，接下来开始解析难点二了。</p>
-<ul>
-<li><strong>难点二</strong></li>
-</ul>
-<p>还是先要分析下这个边框是个啥玩意，看着是有层叠的效果。细细看了下，发现它的规律是第一个绘制一个边框，然后第一个和第二个作为整体外层再绘制一个边框，再前三个作为一个整体绘制边框，依次类推。这样就产生了一种层叠的效果。绘制的规律被我们发现了，那具体如何绘制呢？recyclerview中有一个方法是addItemDecoration，利用ItemDecoration我们可以给每个item绘制边框或者分割线，这里我们定义一个CommentFloorItemDecoration类，继承自ItemDecoration，重写其中的onDraw和getItemOffsets方法，代码如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">public class CommentFloorItemDecoration extends RecyclerView.ItemDecoration &#123;</div><div class="line">    private static float BORDER_OFFSET;</div><div class="line">    private static float BORDER_WIDTH;</div><div class="line">    private Context mContext;</div><div class="line">    private Paint mBorderPaint;</div><div class="line"></div><div class="line">    public CommentFloorItemDecoration(Context context) &#123;</div><div class="line">        mContext = context;</div><div class="line"></div><div class="line">        BORDER_OFFSET = context.getResources().getDisplayMetrics().density * 1;</div><div class="line">        BORDER_WIDTH = context.getResources().getDisplayMetrics().density * 1;</div><div class="line">        mBorderPaint = new Paint();</div><div class="line">        mBorderPaint.setAntiAlias(true);</div><div class="line">        mBorderPaint.setColor(Color.LTGRAY);</div><div class="line">        mBorderPaint.setStyle(Paint.Style.STROKE);</div><div class="line">        mBorderPaint.setStrokeWidth(BORDER_WIDTH);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) &#123;</div><div class="line">        int itemCount = parent.getChildCount();</div><div class="line"></div><div class="line">        int top = parent.getChildAt(0).getTop();</div><div class="line">        for (int i = 0; i &lt; itemCount; i++) &#123;</div><div class="line">            View child = parent.getChildAt(i);</div><div class="line">            int left = child.getLeft();</div><div class="line">            int right = child.getRight();</div><div class="line">            int bottom = child.getBottom();</div><div class="line">            c.drawRect(left, top, right, bottom, mBorderPaint);</div><div class="line">            top -= (BORDER_WIDTH + BORDER_OFFSET);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) &#123;</div><div class="line">        super.getItemOffsets(outRect, view, parent, state);</div><div class="line"></div><div class="line"></div><div class="line">        RecyclerView.Adapter adapter = parent.getAdapter();</div><div class="line">        int itemCount = adapter.getItemCount();</div><div class="line">        int i = parent.getChildAdapterPosition(view);</div><div class="line">        int top = (int) ((itemCount - i) * BORDER_WIDTH + (itemCount - i - 1) * BORDER_OFFSET);</div><div class="line">        int left = top;</div><div class="line">        int right = top;</div><div class="line">        int bottom = (int) BORDER_WIDTH;</div><div class="line">        if (i == 0) &#123;</div><div class="line">            outRect.set(left, top, right, bottom);</div><div class="line">        &#125; else &#123;</div><div class="line">            outRect.set(left, 0, right, bottom);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>getItemOffset的作用是得到每个item的偏移量，重写此方法可以给每个item设置偏移量，在这里我们按照上面总结出的规律给不同的item设置的不同的offset值，然后再重写onDraw方法，给item绘制边框，具体逻辑参看代码。最后我们就完整实现盖楼效果了。</p>
-<p>全文就此完毕~（ <strong>注意：</strong> 此文主要是提供一个思路，和原版细节方面有一定出入，并且没有运用到实际项目中过，需要使用的同学请自行测试）</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/仿网易新闻评论“盖楼”效果/" data-id="cj1d6v45m0001goqwhwijl8ht" class="article-share-link">Delen</a>
-      
-      
-    </footer>
-  </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2017/04/11/Recyclerview加载更多功能实现/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nieuwer</strong>
-      <div class="article-nav-title">
-        
-          RecyclerView加载更多功能实现
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2017/04/11/用RxJava实现一个ImageLoader/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ouder</strong>
-      <div class="article-nav-title">用RxJava实现一个ImageLoader</div>
-    </a>
-  
-</nav>
-
-  
-</article>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archieven</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recente berichten</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">用RxJava实现一个ImageLoader</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">仿网易新闻评论“盖楼”效果实现</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/Recyclerview加载更多功能实现/">RecyclerView加载更多功能实现</a>
-          </li>
-        
-          <li>
-            <a href="/2017/04/11/Android消息机制浅析/">Android消息机制浅析</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2017 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-  </div>
-</body>
-</html>
+block content
+  .post
+    h1.post-title= page.title
+    .post-meta= page.date.format('ll')
+      if page.categories.length > 0
+        span= ' | '
+        span.category
+          for category in page.categories.toArray()
+            a(href=url_for(category.path))= category.name
+      if theme.busuanzi == true
+        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
+        span#busuanzi_container_page_pv= ' | '
+          span#busuanzi_value_page_pv
+          span= ' ' + __('Hits')
+    if theme.duoshuo
+      a.ds-thread-count(data-thread-key=page.path, href=url_for(page.path) + '#comments')
+    if theme.disqus
+      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
+    if page.toc
+      div(class='clear')
+        div(id='toc' class='toc-article')
+          div(class='toc-title')= __('contents')
+          != toc(page.content, {list_number: theme.toc_number})
+    .post-content
+      != page.content
+    if theme.shareto == true
+      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
+      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}')= __('shareto')
+    include _partial/tag
+    include _partial/post_nav
+    if theme.duoshuo
+      div(class='ds-share flat' data-thread-key=page.path, data-title=page.title, data-url=page.permalink)
+         .ds-share-inline
+            ul.ds-share-icons-16
+              li(data-toggle='ds-share-icons-more')
+                a(class='ds-more' href='javascript:void(0);') 分享到：
+              li
+                a(class='ds-weibo' href='javascript:void(0);' data-service='weibo') 微博
+              li
+                a(class='ds-qzone' href='javascript:void(0);' data-service='qzone') QQ空间
+              li
+                a(class='ds-qqt' href='javascript:void(0);' data-service='qqt') 腾讯微博
+              li
+                a(class='ds-wechat' href='javascript:void(0);' data-service='wechat') 微信
+            .ds-share-icons-more
+    include _partial/comments
