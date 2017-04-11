@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>RecyclerView加载更多功能实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title:RecyclerView加载更多功能实现2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这">
+  <meta name="description" content="2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这个设计模式在Android里也是广泛应用，最典型的就是">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="RecyclerView加载更多功能实现">
 <meta property="og:url" content="http://yoursite.com/2017/04/11/Recyclerview加载更多功能实现/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title:RecyclerView加载更多功能实现2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这">
+<meta property="og:description" content="2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这个设计模式在Android里也是广泛应用，最典型的就是">
 <meta property="og:image" content="http://img.blog.csdn.net/20160401002049247">
-<meta property="og:updated_time" content="2017-04-11T06:40:08.731Z">
+<meta property="og:updated_time" content="2017-04-11T06:44:32.480Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title:RecyclerView加载更多功能实现2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这">
+<meta name="twitter:title" content="RecyclerView加载更多功能实现">
+<meta name="twitter:description" content="2017.3.20更新-更新说明：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。 装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这个设计模式在Android里也是广泛应用，最典型的就是">
 <meta name="twitter:image" content="http://img.blog.csdn.net/20160401002049247">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -76,10 +76,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RecyclerView加载更多功能实现
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-RecyclerView加载更多功能实现"><a href="#title-RecyclerView加载更多功能实现" class="headerlink" title="title:RecyclerView加载更多功能实现"></a>title:RecyclerView加载更多功能实现</h2><p><strong>2017.3.20更新</strong><br>-<br><strong>更新说明</strong>：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。</p>
+        <p><strong>2017.3.20更新</strong><br>-<br><strong>更新说明</strong>：之前看评论里的童鞋们给我反映问题，很感谢大家指出，针对出现的问题我进行了一些改进。同时将加载更多的这个功能从主体的adapter中分离出来，使用了装饰者模式，降低了代码的耦合，这样便于维护和修改。</p>
 <p>装饰者模式是常用的Java设计模式之一，不熟悉的童鞋可以自行查阅资料，先了解了装饰者模式看以下内容会容易懂一点~这个设计模式在Android里也是广泛应用，最典型的就是Context的应用了。</p>
 <p>……………………….我是分割线…………………………………………</p>
 <p>Recyclerview是 Listview 的升级版本，在项目中使用较为广泛，官方也推荐我们使用 Recyclerview 来代替 Listview，在此就不多说 Recyclerview 的优势特点 balala了。。。</p>
@@ -117,7 +126,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/Recyclerview加载更多功能实现/" data-id="cj1d6hide0003jgqw4u1owmal" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/04/11/Recyclerview加载更多功能实现/" data-id="cj1d6me5r0001xoqw3b9qyqmk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -127,7 +136,7 @@
 <nav id="article-nav">
   
     <a href="/2017/04/11/Android消息机制浅析/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           Android消息机制浅析
@@ -137,7 +146,7 @@
   
   
     <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title"></div>
     </a>
   
@@ -170,7 +179,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -183,7 +192,7 @@
           </li>
         
           <li>
-            <a href="/2017/04/11/Recyclerview加载更多功能实现/">(no title)</a>
+            <a href="/2017/04/11/Recyclerview加载更多功能实现/">RecyclerView加载更多功能实现</a>
           </li>
         
           <li>
@@ -203,7 +212,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2017 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
