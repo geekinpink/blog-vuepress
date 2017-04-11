@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>仿网易新闻评论“盖楼”效果实现 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title:仿网易新闻评论“盖楼”效果实现前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这">
+  <meta name="description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="仿网易新闻评论“盖楼”效果实现">
 <meta property="og:url" content="http://yoursite.com/2017/04/11/仿网易新闻评论“盖楼”效果/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title:仿网易新闻评论“盖楼”效果实现前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这">
-<meta property="og:updated_time" content="2017-04-11T06:44:30.110Z">
+<meta property="og:description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
+<meta property="og:updated_time" content="2017-04-11T06:47:35.694Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title:仿网易新闻评论“盖楼”效果实现前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这">
+<meta name="twitter:title" content="仿网易新闻评论“盖楼”效果实现">
+<meta name="twitter:description" content="前言各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。 首先上图给大家看下效果： ### 思路数据结构设计首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的mod">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -74,10 +74,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      仿网易新闻评论“盖楼”效果实现
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-仿网易新闻评论“盖楼”效果实现"><a href="#title-仿网易新闻评论“盖楼”效果实现" class="headerlink" title="title:仿网易新闻评论“盖楼”效果实现"></a>title:仿网易新闻评论“盖楼”效果实现</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。</p>
+        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>各位应该对黄易新闻比较熟悉，其中评论区一般都会出现一些盖楼的神评论，今天的主题就是仿照做一个有盖楼效果的评论列表。</p>
 <p>首先上图给大家看下效果：</p>
 <p>###</p>
 <h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><h5 id="数据结构设计"><a href="#数据结构设计" class="headerlink" title="数据结构设计"></a>数据结构设计</h5><p>首先分析看下评论的结构，仔细观摩下发现，有的评论是简单一条，只有用户头像，昵称，评论内容等；有的评论是回复别人的评论，这样就不只是有用户头像，评论内容等基础信息，还有回复的别人的内容，这就是所谓“盖楼”了。那么怎么设计评论的model可以包含评论的所有数据呢？</p>
@@ -127,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/仿网易新闻评论“盖楼”效果/" data-id="cj1d6me5t0002xoqwu5xqgzwx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/仿网易新闻评论“盖楼”效果/" data-id="cj1d6qeyt0002esqw3otqae7h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -148,7 +157,7 @@
   
     <a href="/2017/04/11/用RxJava实现一个ImageLoader/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title"></div>
+      <div class="article-nav-title">用RxJava实现一个ImageLoader</div>
     </a>
   
 </nav>
@@ -185,11 +194,11 @@
       <ul>
         
           <li>
-            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">(no title)</a>
+            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">用RxJava实现一个ImageLoader</a>
           </li>
         
           <li>
-            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">(no title)</a>
+            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">仿网易新闻评论“盖楼”效果实现</a>
           </li>
         
           <li>

@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hexo</title>
+  <title>用RxJava实现一个ImageLoader | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title:用RxJava实现一个ImageLoader在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内">
+  <meta name="description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
 <meta name="keywords">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="用RxJava实现一个ImageLoader">
 <meta property="og:url" content="http://yoursite.com/2017/04/11/用RxJava实现一个ImageLoader/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="title:用RxJava实现一个ImageLoader在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内">
-<meta property="og:updated_time" content="2017-04-11T06:44:31.003Z">
+<meta property="og:description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
+<meta property="og:updated_time" content="2017-04-11T06:47:34.505Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="title:用RxJava实现一个ImageLoader在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内">
+<meta name="twitter:title" content="用RxJava实现一个ImageLoader">
+<meta name="twitter:description" content="在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，戳我，这篇文章是RxJava入门很好的资料。 RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -74,10 +74,19 @@
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用RxJava实现一个ImageLoader
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-用RxJava实现一个ImageLoader"><a href="#title-用RxJava实现一个ImageLoader" class="headerlink" title="title:用RxJava实现一个ImageLoader"></a>title:用RxJava实现一个ImageLoader</h2><p>在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_15%20%E6%88%B3%E6%88%91" target="_blank" rel="external">戳我</a>，这篇文章是RxJava入门很好的资料。</p>
+        <p>在看这篇文章已经假设你对RxJava有了一点点了解，如果你都不知道RxJava是啥，<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_15%20%E6%88%B3%E6%88%91" target="_blank" rel="external">戳我</a>，这篇文章是RxJava入门很好的资料。</p>
 <p>RxJava的流式编程方式确实让有些复杂的代码简化不少，提高了代码的可阅读性，后期维护起来自然也方便很多。一开始只是看RxJava的文档确实很抽象，面对一大堆操作符，各种不知道什么鬼东西的概念，看的云里雾里的，内心一万头草泥马奔过，摔！所以还是做一个Demo来学习是比较高效的学习方式。</p>
 <p>在这个前提下，我就开始着手写了一个ImageLoader。之所以是做ImageLoader，是因为最近也正好在看主席的《Android开发艺术探索》，其中一章正好是实现了一个ImageLoader，书里的实现方式是线程池和Handler，耗时的加载图片任务在线程池中执行，执行完成后发送消息到Handler，给ImageView设置图片在主线程中完成。基本设计思路和AsyncTask一致，对这块不懂的可以去看下AsyncTask的源码，在此就不展开分析了，善用搜索。</p>
 <p>这种类似AsyncTask的实现看着代码很繁琐，用RxJava来代替Handler和线程池实现线程切换和异步加载便捷很多，代码的逻辑看起来也舒服多了。</p>
@@ -99,7 +108,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/04/11/用RxJava实现一个ImageLoader/" data-id="cj1d6me5u0003xoqwaf92povk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/04/11/用RxJava实现一个ImageLoader/" data-id="cj1d6qeyv0003esqwhp30yocl" class="article-share-link">Share</a>
       
       
     </footer>
@@ -112,7 +121,7 @@
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          (no title)
+          仿网易新闻评论“盖楼”效果实现
         
       </div>
     </a>
@@ -152,11 +161,11 @@
       <ul>
         
           <li>
-            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">(no title)</a>
+            <a href="/2017/04/11/用RxJava实现一个ImageLoader/">用RxJava实现一个ImageLoader</a>
           </li>
         
           <li>
-            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">(no title)</a>
+            <a href="/2017/04/11/仿网易新闻评论“盖楼”效果/">仿网易新闻评论“盖楼”效果实现</a>
           </li>
         
           <li>
