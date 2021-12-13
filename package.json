@@ -5,9 +5,15 @@
   "license": "MIT",
   "scripts": {
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "prepush": "sh ./deploy.sh"
+    "docs:build": "vuepress build docs"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "echo test",
+      "pre-push": "sh ./husky/pre-push.sh"
+    }
+  }
+ ,
   "devDependencies": {
     "husky": "^7.0.4",
     "vuepress": "^1.8.2"
