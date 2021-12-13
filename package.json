@@ -6,7 +6,7 @@
   "scripts": {
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "prepush": "sh ./deploy.sh"
+    "prepare": "husky install"
   },
   "devDependencies": {
     "husky": "^7.0.4",
